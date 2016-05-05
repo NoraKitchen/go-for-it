@@ -1,12 +1,18 @@
 angular.module('con4', [])
-	.controller('GameController', function($scope){
+	.controller('GameController', function(){
 		
-		$scope.newGame = function(){
+		var gc = this;
+		
+		gc.newGame = function(){
 			/**
 			 * set victory to false
 			 * $scope.grid = buildGrid();
 			 * This is connect 4 so red plays first
 			 */
+			
+			gc.victory = false;
+			gc.grid = buildGrid()
+			gc.redActive = true;
 		}
 		
 		function buildGrid(){
@@ -20,17 +26,28 @@ angular.module('con4', [])
 			 * }
 			 */
 			
+			var grid = [];
+			
+			for (var row = 0; row < 7; row++){
+				grid[row] = [];
+				for (var col = 0; col < 6; col++){
+					grid[row][col] = {row: row, col: col};
+				}
+			}
+			
+			return grid;
+			
 			//Once you finishe building your grid make sure $scope.newGame is setting 
 			//$scope.grid = buildGrid();
 			//If your build grid is working correctly you can start up your server to see the grid
 			//drawn to the screen.
 		}
 		
-		$scope.dropToken = function(col){
+		gc.dropToken = function(col){
 			//The col is passed in from the view
 			//Column is full no space available
 			//Bad Drop
-			if($scope.grid[0][col].hasToken){
+			if(gc.grid[0][col].hasToken){
 				return;
 			}
 			
